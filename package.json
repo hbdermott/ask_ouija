@@ -5,9 +5,12 @@
   },
   "type": "commonjs",
   "scripts": {
-    "start": "node index.js",
-    "deploy": " node deploy-commands.js"
+    "build": "./node_modules/typescript/bin/tsc && node deploy-commands",
+    "start": "node index.js"
   },
   "author": "Hunter Dermott",
-  "readme": "README.pdf"
+  "readme": "README.pdf",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
 }
