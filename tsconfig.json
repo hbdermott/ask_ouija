@@ -1,0 +1,9 @@
+{
+"compilerOptions": {
+    "module": "commonjs",
+    "target": "ES3",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true
+}
+}
