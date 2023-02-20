@@ -5,10 +5,12 @@
   },
   "type": "commonjs",
   "scripts": {
-    "build": "./node_modules/typescript/bin/tsc && node deploy-commands",
-    "start": "node index.js"
+    "build": "./node_modules/typescript/bin/tsc",
+    "start": "node index.js",
+    "clean": "find . -name \\*.js -type f -not -path \"./node_modules/*\" -delete"
   },
   "author": "Hunter Dermott",
+  "license": "MIT",
   "readme": "README.pdf",
   "devDependencies": {
     "typescript": "^4.9.5"

@@ -1,9 +1,13 @@
-const fs = require('node:fs');
-const path = require('node:path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { Client, Events, GatewayIntentBits, Collection} from 'discord.js';
 require('dotenv').config()
-const { Client, Events, GatewayIntentBits, Collection} = require('discord.js');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+class ClientAndCommands extends Client{
+	commands: Collection<any,any>
+}
+
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] }) as ClientAndCommands;
 client.commands = new Collection();
 
 
@@ -27,8 +31,8 @@ client.once(Events.ClientReady, c => {
 
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
-
-	const command = interaction.client.commands.get(interaction.commandName);
+	const client = interaction.client as ClientAndCommands
+	const command = client.commands.get(interaction.commandName);
 
 	if (!command) {
 		console.error(`No command matching ${interaction.commandName} was found.`);
