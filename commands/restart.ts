@@ -11,10 +11,10 @@ module.exports = {
         await interaction.deferReply();
         exec("sudo systemctl restart ask_ouija.service", async (error, stdout, stderr) => {
             if (error || stderr) {
-                await interaction.reply("Failed to restart bot")
+                await interaction.editReply("Failed to restart bot")
                 return;
             }
-            await interaction.reply("Restarting bot...")
+            await interaction.editReply("Restarting bot...")
         });
     }
 }
