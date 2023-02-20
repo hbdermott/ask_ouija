@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc",
+    "deploy": "node deploy-commands.js",
     "start": "node index.js",
     "clean": "find . -name \\*.js -type f -not -path \"./node_modules/*\" -delete"
   },

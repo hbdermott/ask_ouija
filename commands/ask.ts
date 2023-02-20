@@ -74,7 +74,7 @@ module.exports = {
             const answer = collected.map(value => value.content).join('').toUpperCase();
             let response = `\`\`\`yaml\nQuestion: ${question} \nAnswer: ${answer} \n\`\`\``;
             if(question.includes('_')){
-                response = `\`\`\`yaml\n${question.replace(/_*/i, answer)}\n\`\`\``;
+                response = `\`\`\`yaml\n${question.replace(/\_+/i, answer)}\n\`\`\``;
                 await thread.setName(response)
             }
             await thread.send(response);
