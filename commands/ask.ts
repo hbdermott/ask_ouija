@@ -75,7 +75,6 @@ module.exports = {
             let response = `\`\`\`yaml\nQuestion: ${question} \nAnswer: ${answer} \n\`\`\``;
             if(question.includes('_')){
                 response = `\`\`\`yaml\n${question.replace(/\_+/i, answer)}\n\`\`\``;
-                await thread.setName(response)
             }
             await thread.send(response);
             await thread.setLocked(true);
