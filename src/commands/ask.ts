@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, TextChannel, SlashCommandBuilder, ThreadAutoArchiveDuration, Events, PermissionFlagsBits, Message, MessageCollector} from "discord.js";
+import { ChatInputCommandInteraction, TextChannel, SlashCommandBuilder, ThreadAutoArchiveDuration, Events, PermissionFlagsBits, Message, MessageCollector, SlashCommandStringOption} from "discord.js";
 
 class CollectorAuthors extends MessageCollector{
     authors: Map<string, number>;
@@ -21,21 +21,31 @@ module.exports = {
     .addIntegerOption(option => option
         .setName('amount')
         .setDescription('The amount of characters users are allowed')
-        .setRequired(false)),
+        .setRequired(false)
+        .setMinValue(1))
+    .addIntegerOption(option => option
+        .setName('archive')
+        .setDescription('Duration until auto archive. Defaults to Channel Default')
+        .setRequired(false)
+        .addChoices(
+            {name: "Hour", value: ThreadAutoArchiveDuration.OneHour},
+            {name: "Day", value: ThreadAutoArchiveDuration.OneDay},
+            {name: "3 Days", value: ThreadAutoArchiveDuration.ThreeDays},
+            {name: "Week", value: ThreadAutoArchiveDuration.OneWeek},
+        )),
     async execute(interaction: ChatInputCommandInteraction) {
         if(interaction.channel?.isThread())
             return
+        const channel = interaction.channel as TextChannel
         const question: string = interaction.options.getString('question');
         const editable: boolean = interaction.options.getBoolean('editable') ?? false;
         const amountChars: number = interaction.options.getInteger('amount') ?? 1;
-        const channel = interaction.channel as TextChannel
-
-        await interaction.deferReply();
+        const archiveDuration: number = interaction.options.getInteger('archive') ?? channel.defaultAutoArchiveDuration;
 
         const thread = await channel?.threads.create({
             name: question!,
             reason: 'A new AskOuija question',
-            autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek
+            autoArchiveDuration: archiveDuration
         });
 
 
